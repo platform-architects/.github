@@ -1,0 +1,41 @@
+name: 'Auto Assign'
+on:
+  pull_request:
+    branches: 
+      - master
+      - main
+    jobs:
+     paths:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: kentaro-m/auto-assign-action@v1.2.1
+         with:
+            configuration-path: '.github/workflow/pr.yml'
+            AddReviewers: true
+            addAssignaees: false
+            numberOfReviewers: 0
+            useReviewGroups: true
+            
+            reviewGroups:
+               pt_reviewers:
+                   - midemore
+                   - cwilliams-intelerad
+                   - SkylarHoughtonIntelerad
+                   - acarter-ims
+                   - anknighton
+
+# A list of keywords to be skipped the process that add reviewers if pull requests include it
+         skipKeywords:
+         - wip
+        
+        
+         jobs:
+         if_merged:
+         if: github.event.pull_request.merged == true
+           runs-on:ubuntu-latest
+         steps:
+          - run: |
+             echo The PR was merged
+
+
+
